@@ -63,7 +63,7 @@ public class SeamCarver {
                 transposedEnergy[row][col] = energy[col][row];
             }
         }
-        final StreamCarverHelper streamFinder = new StreamCarverHelper(transposedEnergy, width(), height());
+        final SeamCarverHelper streamFinder = new SeamCarverHelper(transposedEnergy, width(), height());
         return streamFinder.findVerticalStream();
     }
 
@@ -71,7 +71,7 @@ public class SeamCarver {
      * sequence of indices for vertical seam
      */
     public int[] findVerticalSeam() {
-        final StreamCarverHelper streamFinder = new StreamCarverHelper(energy, height(), width());
+        final SeamCarverHelper streamFinder = new SeamCarverHelper(energy, height(), width());
         return streamFinder.findVerticalStream();
     }
 

@@ -1,4 +1,4 @@
-public class StreamCarverHelper {
+public class SeamCarverHelper {
 
     private double[][] energy;
     private int width;
@@ -7,7 +7,7 @@ public class StreamCarverHelper {
     private double[][] distTo;
     private int[][] edgeTo;
 
-    public StreamCarverHelper(final double[][] energy, final int height, final int width) {
+    public SeamCarverHelper(final double[][] energy, final int height, final int width) {
         this.energy = energy;
         this.width = width;
         this.height = height;
