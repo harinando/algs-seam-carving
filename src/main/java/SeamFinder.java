@@ -1,4 +1,4 @@
-public class SeamCarverHelper {
+public class SeamFinder {
 
     private double[][] energy;
     private int width;
@@ -7,7 +7,7 @@ public class SeamCarverHelper {
     private double[][] distTo;
     private int[][] edgeTo;
 
-    public SeamCarverHelper(final double[][] energy, final int height, final int width) {
+    public SeamFinder(final double[][] energy, final int height, final int width) {
         this.energy = energy;
         this.width = width;
         this.height = height;
@@ -80,7 +80,7 @@ public class SeamCarverHelper {
     }
 
     /*
-     * Initialize distTo to Infinity
+     * Initialize distTo and edgeTo
      */
     private void initialize() {
         // Initialize first row

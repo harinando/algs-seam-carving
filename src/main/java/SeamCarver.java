@@ -63,7 +63,7 @@ public class SeamCarver {
                 transposedEnergy[row][col] = energy[col][row];
             }
         }
-        final SeamCarverHelper streamFinder = new SeamCarverHelper(transposedEnergy, width(), height());
+        final SeamFinder streamFinder = new SeamFinder(transposedEnergy, width(), height());
         return streamFinder.findVerticalStream();
     }
 
@@ -71,7 +71,7 @@ public class SeamCarver {
      * sequence of indices for vertical seam
      */
     public int[] findVerticalSeam() {
-        final SeamCarverHelper streamFinder = new SeamCarverHelper(energy, height(), width());
+        final SeamFinder streamFinder = new SeamFinder(energy, height(), width());
         return streamFinder.findVerticalStream();
     }
 
@@ -79,11 +79,31 @@ public class SeamCarver {
      * Remove horizontal seam from current picture
      */
     public void removeHorizontalSeam(int[] seam) {
+
+        if (seam == null) {
+            throw new IllegalArgumentException();
+        }
+
+        if (seam.length != height()) {
+            throw new IllegalArgumentException();
+        }
     }
 
     /*
      * remove vertical seam from current picture
      */
     public void removeVerticalSeam(int[] seam) {
+
+        if (seam == null) {
+            throw new IllegalArgumentException();
+        }
+
+        if (seam.length != height()) {
+            throw new IllegalArgumentException();
+        }
+
+        for (int row = 0; row < seam.length; row++) {   // seam to remove
+            System.arraycopy(energy[0], );
+        }
     }
 }
