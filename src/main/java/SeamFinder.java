@@ -7,10 +7,10 @@ public class SeamFinder {
     private double[][] distTo;
     private int[][] edgeTo;
 
-    public SeamFinder(final double[][] energy, final int height, final int width) {
+    public SeamFinder(final double[][] energy) {
         this.energy = energy;
-        this.width = width;
-        this.height = height;
+        this.width = energy.length;
+        this.height = energy[0].length;
 
         this.edgeTo = new int[width][height];
         this.distTo = new double[width][height];
