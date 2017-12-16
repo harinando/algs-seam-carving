@@ -6,7 +6,6 @@ public class DualGradientEnergyCalculator {
 
     private static double BORDER_ENERGY = 1000L;
 
-
     public static double energy(final Picture picture, final int x, final int y) {
         if (x < 0 || x > picture.width() - 1 || y < 0 || y > picture.height() - 1)
             throw new IllegalArgumentException();

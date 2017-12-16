@@ -1,6 +1,6 @@
 public class SeamFinder {
 
-    private double[][] energy;
+    private final double[][] energy;
     private int width;
     private int height;
 

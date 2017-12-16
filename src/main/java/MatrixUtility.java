@@ -5,6 +5,14 @@ import edu.princeton.cs.algs4.Picture;
  */
 public class MatrixUtility {
 
+    public static int getHeight(final int[][] array) {
+        return array[0].length;
+    }
+
+    public static int getWidth(final int[][] array) {
+        return array.length;
+    }
+
     public static Picture transpose(final Picture picture) {
         final int width = picture.width();
         final int height = picture.height();

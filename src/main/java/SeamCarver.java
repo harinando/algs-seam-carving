@@ -1,28 +1,29 @@
 import edu.princeton.cs.algs4.Picture;
+import java.awt.Color;
 
 public class SeamCarver {
 
     private Picture picture;
     private double [][] energy;
-//    private int[][] pictureInRGB;
-//    private int width;
-//    private int height;
+    private int[][] pictureInRGB;
+    private int width;
+    private int height;
 
     /*
      * create a seam carver object based on the given picture
      */
     public SeamCarver(final Picture picture) {
         this.picture = picture;
-//        this.width = picture.width();
-//        this.height = picture.height();
+        this.width = picture.width();
+        this.height = picture.height();
 
-        energy = new double[width()][height()];
-//        pictureInRGB = new int[width()][height()];
+        energy = new double[width][height];
+        pictureInRGB = new int[width][height];
 
-        for (int col = 0; col < width(); col++) {
-            for (int row = 0; row < height(); row++) {
+        for (int col = 0; col < width; col++) {
+            for (int row = 0; row < height; row++) {
                 energy[col][row] = energy(col, row);
-//                pictureInRGB[col][row] = picture.get(col, row).getRGB();
+                pictureInRGB[col][row] = picture.get(col, row).getRGB();
             }
         }
     }
@@ -42,28 +43,25 @@ public class SeamCarver {
      *
      */
     public Picture picture() {
-//        picture = new Picture(width, height);
-//        for (int col = 0; col < width; col++) {
-//            for (int row = 0; row < height; row++) {
-//                picture.set(col, row, new Color(pictureInRGB[col][row]));
-//            }
-//        }
-        return picture;
+        Picture resizedPicture = new Picture(width, height);
+        for (int col = 0; col < width; col++)
+            for (int row = 0; row < height; row++)
+                resizedPicture.set(col, row, new Color(pictureInRGB[col][row]));
+        return resizedPicture;
     }
-
 
     /*
      * width of current picture
      */
     public int width() {
-        return picture.width();
+        return MatrixUtility.getWidth(pictureInRGB);
     }
 
     /*
      * height of current picture
      */
     public int height() {
-        return picture.height();
+        return MatrixUtility.getHeight(pictureInRGB);
     }
 
     /*
@@ -82,7 +80,6 @@ public class SeamCarver {
      * Sequence of indices for horizontal seam
      *
      * Optimization:
-     *
      *
      */
     public int[] findHorizontalSeam() {
@@ -107,10 +104,10 @@ public class SeamCarver {
      * Remove horizontal seam from current picture
      */
     public void removeHorizontalSeam(int[] seam) {
-        picture = MatrixUtility.transpose(picture);
+        pictureInRGB = MatrixUtility.transpose(pictureInRGB);
         energy = MatrixUtility.transpose(energy);
         removeVerticalSeam(seam);
-        picture = MatrixUtility.transpose(picture);
+        pictureInRGB = MatrixUtility.transpose(pictureInRGB);
         energy = MatrixUtility.transpose(energy);
     }
 
@@ -118,10 +115,30 @@ public class SeamCarver {
      * remove vertical seam from current picture
      */
     public void removeVerticalSeam(int[] seam) {
-        final VerticalSeamRemover seamRemover = new VerticalSeamRemover(this.picture, energy, seam);
-        this.energy = seamRemover.getEnergy();
-        this.picture = seamRemover.getPicture();
-//        this.width = seamRemover.getWidth();
-//        this.height = seamRemover.getHeight();
+        removeSeam(seam);
+    }
+
+    private void removeSeam(final int[] seam) {
+        double[][] resizedEnergy = new double[width()-1][height()];
+        int[][] resizedPictureInRGB = new int[width()-1][height()];
+
+        for (int row = 0; row < height(); row++) {
+
+            // copy left half of the picture
+            for (int col = 0; col < seam[row]; col++) {
+                resizedEnergy[col][row] = energy[col][row];
+                resizedPictureInRGB[col][row] = pictureInRGB[col][row];
+            }
+
+            // copy right half of the picture
+            for (int col = seam[row] + 1; col < width(); col++) {
+                resizedEnergy[col-1][row] = energy[col][row];
+                resizedPictureInRGB[col-1][row] = pictureInRGB[col][row];
+            }
+        }
+        pictureInRGB = resizedPictureInRGB;
+        energy = resizedEnergy;
+        width = MatrixUtility.getWidth(pictureInRGB);
+        height = MatrixUtility.getHeight(pictureInRGB);
     }
 }
