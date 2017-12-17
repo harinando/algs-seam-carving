@@ -1,6 +1,5 @@
 public class SeamFinder {
 
-    private final double[][] energy;
     private int width;
     private int height;
 
@@ -8,31 +7,30 @@ public class SeamFinder {
     private int[][] edgeTo;
 
     public SeamFinder(final double[][] energy) {
-        this.energy = energy;
         this.width = energy.length;
         this.height = energy[0].length;
 
         this.edgeTo = new int[width][height];
         this.distTo = new double[width][height];
-        initialize();
+        initialize(energy);
     }
 
     /*
      * Relax
      */
-    public int[] findVerticalStream() {
+    public int[] findVerticalStream(final double [][] energy) {
 
         for (int row = 0; row < height; row++) {
             for (int col = 0; col < width; col++) {
 
                 // relax bottom-right if it is valid
-                relax(col, row, col+1, row+1);
+                relax(energy, col, row, col+1, row+1);
 
                 // relax bottom
-                relax(col, row, col, row+1);
+                relax(energy, col, row, col, row+1);
 
                 // relax bottom-left
-                relax(col, row, col-1, row+1);
+                relax(energy, col, row, col-1, row+1);
             }
         }
 
@@ -54,7 +52,7 @@ public class SeamFinder {
         int[] path = new int[height];
         int posPtr = height - 1;
 
-        while(nextIndex != -1) {
+        while (nextIndex != -1) {
             int lastCol = getColumnIndex(nextIndex);
             int lastRow = getRowIndex(nextIndex);
             nextIndex = edgeTo[lastCol][lastRow];
@@ -65,7 +63,7 @@ public class SeamFinder {
     }
 
 
-    private void relax(final int fromCol, final int fromRow, final int toCol, final int toRow) {
+    private void relax(final double[][] energy, final int fromCol, final int fromRow, final int toCol, final int toRow) {
         if (fromCol < 0 || fromRow < 0 || toCol < 0 || toRow < 0)
             return;
 
@@ -82,7 +80,7 @@ public class SeamFinder {
     /*
      * Initialize distTo and edgeTo
      */
-    private void initialize() {
+    private void initialize(final double [][] energy) {
         // Initialize first row
         for (int col = 0; col < this.width; col++) {
             this.edgeTo[col][0] = -1;

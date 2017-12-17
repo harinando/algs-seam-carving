@@ -9,7 +9,7 @@
 import edu.princeton.cs.algs4.Picture;
 import edu.princeton.cs.algs4.StdRandom;
 
-import java.awt.*;
+import java.awt.Color;
 
 public class SCUtility {
 
